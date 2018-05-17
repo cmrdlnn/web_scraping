@@ -7,7 +7,7 @@ require 'irb'
 require 'irb/completion'
 
 begin
-  require_relative '../lib/web_scraping'
+  require_relative '../lib/web_scraping/web_scraping'
 rescue LoadError
   nil
 end
