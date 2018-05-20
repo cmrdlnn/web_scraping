@@ -5,9 +5,9 @@ module WebScraping
     # Базовый класс для формирования списка дат заданного диапазона
     class Dates
       # Инициализирует объект класса
-      def initialize(date_start, date_finish)
-        @date_start = date_start
-        @date_finish = date_finish
+      def initialize(params)
+        @date_start = params[:date_start]
+        @date_finish = params[:date_finish]
       end
 
       attr_reader :date_start, :date_finish

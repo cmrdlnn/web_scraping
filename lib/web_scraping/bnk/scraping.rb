@@ -8,8 +8,8 @@ module WebScraping
     # bnkomi.ru
     class Scraping < WebScraping::Base::Dates
       # Инициализирует объект класса
-      def initialize(date_start, date_finish)
-        super(date_start, date_finish)
+      def initialize(params)
+        super(params)
         @base_url = 'http://bnkomi.ru'
       end
 
@@ -17,7 +17,7 @@ module WebScraping
 
       # Парсит страницы со статьями по заданным датам и формирует отчет в xlsx
       def scraping
-        Base::ReportToXLSX.new('bnkomi').create_report(scraping_articles)
+        Base::ReportToXLSX.new.create_report(scraping_articles)
       end
 
       private

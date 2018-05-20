@@ -5,16 +5,16 @@ require 'rubyXL'
 module WebScraping
   module Base
     class ReportToXLSX
-      attr_accessor :workbook, :sheet, :filename
 
       WIDTH = [12, 60, 20, 20, 70].freeze
 
       # Инициализирует объект класса
-      def initialize(filename)
+      def initialize
         @workbook = RubyXL::Workbook.new
         @sheet = @workbook[0]
-        @filename = filename
       end
+
+      attr_accessor :workbook, :sheet
 
       # Генерирует отчет по статьям
       # @params [Array<String, String, Array>] scraping_info
@@ -27,7 +27,7 @@ module WebScraping
         change_column_alignment
         sheet.change_column_font_color(1, '000080')
         border_and_wrap
-        workbook.write("tmp/#{filename}.xlsx")
+        workbook
       end
 
       private

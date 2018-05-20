@@ -1,7 +1,0 @@
----
-- hosts: all
-  roles:
-    - role: ansible-apt
-      apt_packages:
-        - mc
-        - git

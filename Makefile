@@ -1,8 +1,11 @@
 install:
 	bundle install
 
-debug:
+console:
 	bundle exec bin/console
+
+run:
+	bundle exec foreman start
 
 test:
 	bundle exec rspec --fail-fast
