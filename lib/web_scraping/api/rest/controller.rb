@@ -25,7 +25,7 @@ module WebScraping
         # @return [Status]
         #   200
         get '/api/bnk/comments' do
-          slice_params = params.slice(:date_start, :date_finish)
+          slice_params = params.slice(:start, :finish)
           content = WebScraping.bnk_scraping(slice_params)
           content_type CONTENT_TYPE
           headers 'Content-Disposition' => CONTENT_DISPOSITION
@@ -39,7 +39,7 @@ module WebScraping
         # @return [Status]
         #  200
         get '/api/komiinform/comments' do
-          slice_params = params.slice(:date_start, :date_finish)
+          slice_params = params.slice(:start, :finish)
           content = WebScraping.komiinform_scraping(slice_params)
           content_type CONTENT_TYPE
           headers 'Content-Disposition' => CONTENT_DISPOSITION
@@ -49,7 +49,7 @@ module WebScraping
 
         # Задаёт index.erb view по умолчанию для всех get запросов
         #
-        get '/*' do
+        get '/' do
           erb :index
         end
       end

@@ -32,3 +32,5 @@ Dir["#{__dir__}/initializers/*.rb"].sort.each(&method(:require))
 
 # Загрузка инициализации, связанной с окружением
 Dir["#{__dir__}/environments/*.rb"].sort.each(&method(:require))
+
+Dir["#{$lib}/*.rb"].sort.each(&method(:require))

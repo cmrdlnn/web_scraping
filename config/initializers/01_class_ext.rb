@@ -10,4 +10,3 @@ require 'active_support/core_ext/object/blank.rb'
 require 'active_support/core_ext/hash/except.rb'
 require 'active_support/core_ext/hash/keys.rb'
 require 'active_support/core_ext/hash/slice.rb'
-

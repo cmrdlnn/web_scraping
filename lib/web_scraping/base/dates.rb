@@ -6,8 +6,8 @@ module WebScraping
     class Dates
       # Инициализирует объект класса
       def initialize(params)
-        @date_start = params[:date_start]
-        @date_finish = params[:date_finish]
+        @date_start = params[:start]
+        @date_finish = params[:finish]
       end
 
       attr_reader :date_start, :date_finish

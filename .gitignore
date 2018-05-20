@@ -1,7 +1,13 @@
 # Инфраструктура
 .vagrant
-cm/provisioning/
+cm/provisioning/roles/
 cm/deploy/roles/
 
 # Временные файлы
 tmp
+
+node_modules/
+
+public/*
+!public/.keep
+!public/favicon.ico

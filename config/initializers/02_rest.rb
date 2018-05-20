@@ -20,5 +20,4 @@ WebScraping::API::REST::Controller.configure do |settings|
 
   settings.enable :static
   settings.set    :root, $root
-  settings.set    :public_folder, "#{$root}/dist"
 end

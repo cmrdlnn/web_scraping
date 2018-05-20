@@ -29,7 +29,7 @@ module WebScraping
 
         # Регистрация в контроллере обработчиков ошибок
         #
-        # @param [BitcoinCourseMonitoring::API::REST::Controller] controller
+        # @param [WebScraping::API::REST::Controller] controller
         #   контроллер
         #
         def self.registered(controller)
