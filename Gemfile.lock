@@ -38,6 +38,10 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
+    rubyXL (3.3.29)
+      nokogiri (>= 1.4.4)
+      rubyzip (>= 1.1.6)
+    rubyzip (1.2.1)
     sinatra (2.0.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -61,6 +65,7 @@ DEPENDENCIES
   nokogiri
   rake
   rspec
+  rubyXL
   sinatra
 
 BUNDLED WITH

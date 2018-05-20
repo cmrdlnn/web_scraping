@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
-require 'nokogiri'
-require 'open-uri'
-require 'date'
-
 module WebScraping
+  # Пространство имен для класса предоставляющего методы для скрапинга ресурса
+  # bnkomi.ru
   module Bnk
-    class Comments
-
+    # Класс предоставляющий методы для скрапинга ресурса
+    # bnkomi.ru
+    class Scraping < WebScraping::Base::Dates
+      # Инициализирует объект класса
       def initialize(date_start, date_finish)
-        @date_start = date_start
-        @date_finish = date_finish
+        super(date_start, date_finish)
         @base_url = 'http://bnkomi.ru'
       end
 
-      attr_reader :date_start, :date_finish, :base_url
+      attr_reader :base_url
 
-      def comments
-        scraping_articles
+      # Парсит страницы со статьями по заданным датам и формирует отчет в xlsx
+      def scraping
+        Base::ReportToXLSX.new('bnkomi').create_report(scraping_articles)
       end
 
       private
@@ -54,20 +54,6 @@ module WebScraping
           comment_text = comment.at_css("[class='comment txt']").text.strip
           memo << [author, date, comment_text]
         end
-      end
-
-      #Возвращает список дат заданного диапазона
-      # @return [Array<String>]
-      #  список дат заданного диапазона
-      def dates_list
-        date_start = Date.parse(@date_start)
-        date_finish = Date.parse(@date_finish)
-        list = []
-        while date_start <= date_finish
-          list << date_start.strftime("%d-%m-%Y")
-          date_start += 1
-        end
-        list
       end
     end
   end

@@ -8,6 +8,7 @@ gem 'foreman'
 gem 'nokogiri'
 gem 'rake'
 gem 'sinatra'
+gem 'rubyXL'
 
 group :development, :test do
   gem 'awesome_print'
