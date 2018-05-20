@@ -2,7 +2,7 @@
 
 require "#{$lib}/helpers/log"
 
-module BitcoinCourseMonitoring
+module WebScraping
   module API
     module REST
       # @author Алейников Максим <m.v.aleinikov@gmail.com>
@@ -10,7 +10,7 @@ module BitcoinCourseMonitoring
       # Модуль вспомогательных функций для REST-контроллера
       #
       module Helpers
-        include BitcoinCourseMonitoring::Helpers::Log
+        include WebScraping::Helpers::Log
 
         # Возвращает название сервиса в верхнем регистре без знаков
         # подчёркивания и дефисов. Необходимо для журнала событий.
