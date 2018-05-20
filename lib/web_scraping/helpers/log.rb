@@ -88,7 +88,7 @@ module WebScraping
       # @return [String]
       #   результирующая строка
       def repaired_string(obj)
-        str = obj.to_s.dup.force_encoding(Encoding::UTF_8)
+        str = obj.dup.to_s.force_encoding(Encoding::UTF_8)
         return str if str.valid_encoding?
         str.force_encoding(Encoding::ASCII_8BIT)
         str.encode(Encoding::UTF_8, undef: :replace, invalid: :replace)

@@ -2,6 +2,8 @@
 
 require 'sinatra/base'
 
+require "#{$lib}/web_scraping"
+
 require_relative 'helpers'
 
 module WebScraping
@@ -14,7 +16,7 @@ module WebScraping
         helpers Helpers
 
         # Значение заголовка `Content-Disposition`
-        CONTENT_DISPOSITION = 'attachment; filename="presence_report.xlsx"'
+        CONTENT_DISPOSITION = 'attachment; filename="report.xlsx"'
 
         # Значение заголовка `Content-Type`
         CONTENT_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -49,7 +51,7 @@ module WebScraping
 
         # Задаёт index.erb view по умолчанию для всех get запросов
         #
-        get '/' do
+        get '/*' do
           erb :index
         end
       end
