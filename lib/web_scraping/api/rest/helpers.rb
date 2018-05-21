@@ -14,10 +14,8 @@ module WebScraping
 
         # Возвращает название сервиса в верхнем регистре без знаков
         # подчёркивания и дефисов. Необходимо для журнала событий.
-        #
         # @return [String]
         #   преобразованное название сервиса
-        #
         def app_name_upcase
           $app_name.upcase.tr('-', '_')
         end
@@ -32,7 +30,6 @@ module WebScraping
         end
 
         # Добавляет в журнал событий запись о возвращаемом ответе
-        #
         def log_response
           log_debug(binding) do
             parts = [app_name_upcase, 'RESPONSE WITH STATUS', response.status]
@@ -41,27 +38,24 @@ module WebScraping
           end
         end
 
+        # Формирует заголовок для контента
+        # @params [String] site
+        #  название ресурса
+        # @params [Hash] params
+        #  ассоциативнй массив с начальной и онечной датой
+        # @return [String]
+        #  сформированный заголовок
+        def make_content_diposition(site, params)
+          start = params[:start]
+          finish = params[:finish]
+          filename =
+            site + '_' + start.tr('-', '.') +
+            '_' + finish.tr('-', '.') + '.xlsx'
+          "attachment; filename=#{filename}"
+        end
+
         def action_params
           params.compact.tap { |hash| hash.delete(:captures) }
-        end
-
-        # Возвращает, предоставлен ли временный файл в параметрах метода REST
-        # API
-        #
-        # @return [Boolean]
-        #   предоставлен ли временный файл в параметрах метода REST API
-        #
-        def file?
-          params[:file].is_a?(Hash) && params[:file][:tempfile].is_a?(Tempfile)
-        end
-
-        # Возвращает токен авторизации пользователя
-        #
-        # @return [String]
-        #   токен авторизации пользователя
-        #
-        def token
-          request.env['HTTP_X_CSRF_TOKEN']
         end
       end
     end

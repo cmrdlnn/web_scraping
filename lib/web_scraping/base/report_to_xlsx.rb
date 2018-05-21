@@ -5,7 +5,7 @@ require 'rubyXL'
 module WebScraping
   module Base
     class ReportToXLSX
-
+      # Дефолтные высоты строк
       WIDTH = [12, 60, 20, 20, 70].freeze
 
       # Инициализирует объект класса
@@ -37,8 +37,9 @@ module WebScraping
       #  результат скрапинга ресурса, массив
       def generate_sheet(scraping_info)
         scraping_info.reduce(0) do |memo, article|
+          link = %Q{HYPERLINK("#{article[3]}", "#{article[1]}")}
           sheet.add_cell(memo, 0, article[0]).change_font_bold(true)
-          sheet.add_cell(memo, 1, article[1]).change_font_bold(true)
+          sheet.add_cell(memo, 1, '', link).change_font_bold(true)
           sheet.add_cell(memo, 2, 'Автор комментария').change_font_bold(true)
           sheet.add_cell(memo, 3, 'Дата комментария').change_font_bold(true)
           sheet.add_cell(memo, 4, 'Комментарий').change_font_bold(true)

@@ -15,11 +15,10 @@ module WebScraping
       class Controller < Sinatra::Base
         helpers Helpers
 
-        # Значение заголовка `Content-Disposition`
-        CONTENT_DISPOSITION = 'attachment; filename="report.xlsx"'
-
         # Значение заголовка `Content-Type`
-        CONTENT_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        CONTENT_TYPE =
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          .freeze
 
         # Возвращает результат скрапинга коментариев с ресурса bnkomi
         # @param [Hash] params
@@ -30,7 +29,8 @@ module WebScraping
           slice_params = params.slice(:start, :finish)
           content = WebScraping.bnk_scraping(slice_params)
           content_type CONTENT_TYPE
-          headers 'Content-Disposition' => CONTENT_DISPOSITION
+          headers 'Content-Disposition' =>
+            make_content_diposition('bnk', slice_params)
           status :ok
           body content.stream.read
         end
@@ -44,13 +44,13 @@ module WebScraping
           slice_params = params.slice(:start, :finish)
           content = WebScraping.komiinform_scraping(slice_params)
           content_type CONTENT_TYPE
-          headers 'Content-Disposition' => CONTENT_DISPOSITION
+          headers 'Content-Disposition' =>
+            make_content_diposition('komiinform', slice_params)
           status :ok
           body content.stream.read
         end
 
         # Задаёт index.erb view по умолчанию для всех get запросов
-        #
         get '/*' do
           erb :index
         end

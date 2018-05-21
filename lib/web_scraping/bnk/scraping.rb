@@ -35,8 +35,9 @@ module WebScraping
             date = item.css('.date').children.text.strip
             title = item.css('.title').text.strip
             href = item.css('.title').at_css('a')['href']
+            link = base_url + href
             comments = scraping_comments(href)
-            memo << [date, title, comments]
+            memo << [date, title, comments, link]
           end
         end
       end
