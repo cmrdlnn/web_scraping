@@ -46,12 +46,12 @@ module WebScraping
         # @return [String]
         #  сформированный заголовок
         def make_content_diposition(site, params)
-          start = params[:start]
-          finish = params[:finish]
+          start = Date.parse(params[:start]).strftime("%d-%m-%Y")
+          finish = Date.parse(params[:finish]).strftime("%d-%m-%Y")
           filename =
             site + '_' + start.tr('-', '.') +
             '_' + finish.tr('-', '.') + '.xlsx'
-          "attachment; filename=#{filename}"
+          "attachment; filename=\"#{filename}\""
         end
 
         def action_params

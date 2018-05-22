@@ -88,11 +88,13 @@ class App extends Component {
 
   downloadBNKomi = () => { this.download('bnk'); }
 
+  downloadBNKomiStat = () => { this.download('bnk', 'stat'); }
+
   downloadKomiInform = () => { this.download('komiinform'); }
 
-  download = (site) => {
+  download = (site, path = 'comments') => {
     const { start: { iso: start }, finish: { iso: finish } } = this.state;
-    const url = `api/${site}/comments${objectToParams({ start, finish })}`;
+    const url = `api/${site}/${path}${objectToParams({ start, finish })}`;
 
     request(url)
       .then((response) => {
@@ -139,6 +141,15 @@ class App extends Component {
             icon={KomiInformIcon}
             onClick={this.downloadKomiInform}
             title="Комментарии Комиинформ"
+            type="slant-left"
+          />
+        </div>
+        <div className="line">
+          <Button
+            assign="left"
+            icon={BNKomiIcon}
+            onClick={this.downloadBNKomiStat}
+            title="Статистика БНК"
             type="slant-left"
           />
         </div>
