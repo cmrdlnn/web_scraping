@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'thwait'
+
 module WebScraping
   # Пространство имен для класса предоставляющего методы для скрапинга ресурса
   # komiinform.ru
@@ -25,19 +27,23 @@ module WebScraping
 
       # Парсит лист со статьями
       def scraping_articles
+        threads = []
         dates_list.each_with_object([]) do |date, memo|
-          url = base_url + '/curdate/' + date
-          html = open(url)
-          doc = Nokogiri::HTML(html)
-          list = doc.at_css("[class=' b-news']").css('.smallHeader2')
-          list.each do |item|
-            date = date.gsub('-', '.')
-            title = item.children.text.strip
-            href = item['href']
-            link = base_url + href
-            comments = scraping_comments(href)
-            memo << [date, title, comments, link]
+          threads << Thread.new do
+            url = base_url + '/curdate/' + date
+            html = open(url)
+            doc = Nokogiri::HTML(html)
+            list = doc.at_css("[class=' b-news']").css('.smallHeader2')
+            list.each do |item|
+              date = date.gsub('-', '.')
+              title = item.children.text.strip
+              href = item['href']
+              link = base_url + href
+              comments = scraping_comments(href)
+              memo << [date, title, comments, link]
+            end
           end
+          ThreadsWait.all_waits(*threads)
         end
       end
 

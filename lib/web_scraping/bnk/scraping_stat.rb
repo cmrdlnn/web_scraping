@@ -20,7 +20,7 @@ module WebScraping
 
       private
 
-      # Парсит лист со статьями
+      # Парсит страницы со статьями
       def scraping_articles
         dates_list.each_with_object([]) do |date, memo|
           url = base_url + '/data/news/curdate/' + date
