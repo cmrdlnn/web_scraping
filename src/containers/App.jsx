@@ -34,7 +34,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    const moment = MomentJS();
+    const moment = MomentJS().utc();
     moment.endOf('day');
     const finish = this.interval(moment);
     moment.startOf('day');
