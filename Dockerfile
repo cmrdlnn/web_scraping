@@ -1,24 +1,44 @@
-FROM repo.it2.vm/node8.9.4-alpine:latest as front
+FROM ubuntu:16.04
 
-COPY .npmrc package.json package-lock.json ./
+ENV APP_HOME /usr/src/app
 
-RUN npm install --no-optional
+ENV BUILD_PACKAGES \
+  git\
+  mc\
+  im\
+  wget\
+  ruby2.4-dev\
+  g++\
+  unrar\
+  zlib1g-dev
 
-COPY webpack.congig.js ./
-COPY --chown=node:node ./src ./src
+ENV RUBY_VERSION 2.4
 
-RUN npm run build && rm -rf node_modules .npm
+ENV BUNDLER_VERSION 1.16.2
 
-FROM repo.it2.vm/ruby2.4.4-alpine3.7p:latest
+RUN apt-get update \
+    && apt-get install -y software-properties-common \
+    && apt-add-repository ppa:brightbox/ruby-ng \
+    && apt-get update \
+    && apt-get install -y $BUILD_PACKAGES
 
-RUN apk --update --no-cache add nodejs
+RUN apt-get install -y ruby$RUBY_VERSION \
+    && echo "gem: --no-ri --no-rdoc" >> /etc/gemrc \
+    && gem install bundler -v $BUNDLER_VERSION \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY Gemfile Gemfile.lock ./
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
 
-RUN bundle install --without development test
+COPY Gemfile $APP_HOME
+COPY Gemfile.lock $APP_HOME
 
-COPY . .
-COPY --from=front /home/node/public ./public
+RUN bundle config build.nokogiri --use-system-libraries && \
+  bundle install --jobs=4 --without development test
 
-ENTRYPOINT ["/init"]
-CMD ["bundle"]
+COPY . $APP_HOME
+
+EXPOSE 8109S
+
+ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+CMD ["bundle", "exec", "foreman", "start"]
