@@ -1,0 +1,233 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  width: 100%;
+}
+
+body {
+  background-attachment: fixed;
+  background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  margin: 0 auto;
+  background-color: #ddd;
+}
+
+.line {
+  height: 100%;
+  padding-top: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.interval {
+  color: #00967f;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.interval button {
+  background-color: #00967f;
+  border: 0;
+  color: #fff;
+  margin: 0 15px;
+  text-align: center;
+}
+
+.btn {
+  border: 0;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  height: 53px;
+  line-height: 30px;
+  margin: 0 10px;
+  outline: none;
+  overflow: visible;
+  position: relative;
+  text-decoration: none;
+  text-shadow: 0px 1px 1px #888;
+}
+
+.btn span.icon, .btn span.title {
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  display: block;
+  line-height: 50px;
+  padding: 0 30px;
+  position: relative;
+}
+
+.btn span.icon img {
+  max-height: 45px;
+  vertical-align: middle;
+}
+
+.btn span.left {
+  border-radius: 6px 0 0 6px;
+  -moz-border-radius: 6px 0 0 6px;
+  -webkit-border-radius: 6px 0 0 6px;
+  float: left;
+}
+
+.btn span.right {
+  border-radius: 0 6px 6px 0;
+  -moz-border-radius: 0 6px 6px 0;
+  -webkit-border-radius: 0 6px 6px 0;
+  float: right;
+}
+
+.btn span.icon {
+  box-shadow: 0 3px 0 0 #007261;
+  -moz-box-shadow: 0 3px 0 0 #00ae94;
+  -webkit-box-shadow: 0 3px 0 0 #007261;
+  background-color: #00967f;
+  font-size: 23px;
+  text-shadow: 0px 1px 1px #888;
+}
+
+.btn span.title {
+  box-shadow: 0 3px 0 0 #00ae94;
+  -moz-box-shadow: 0 3px 0 0 #00ae94;
+  -webkit-box-shadow: 0 3px 0 0 #00ae94;
+  background-color: #00cdae;
+}
+
+.btn span.arrow-left, .btn span.arrow-right {
+  border-bottom: 25px solid transparent;
+  border-top: 25px solid transparent;
+  height: 0;
+  position: absolute;
+  transition: all .15s;
+  -moz-transition: all .15s;
+  -o-transition: all .15s;
+  -webkit-transition: all .15s;
+  transition-property: left, right;
+  -moz-transition-property: left, right;
+  -o-transition-property: left, right;
+  -webkit-transition-property: left, right;
+  width: 0;
+}
+
+.btn.left span.arrow-left {
+  border-right: 10px solid #00cdae;
+  box-shadow: 10px 0 0 0 #00cdae, 10px 3px 0 0 #00ae94;
+  -moz-box-shadow: 10px 0 0 0 #00cdae, 10px 3px 0 0 #00ae94;
+  -webkit-box-shadow: 10px 0 0 0 #00cdae, 10px 3px 0 0 #00ae94;
+  right: 0;
+}
+
+.btn.right span.arrow-left {
+  border-right: 10px solid #00967f;
+  box-shadow: 10px 0 0 0 #00967f, 10px 3px 0 0 #007261;
+  -moz-box-shadow: 10px 0 0 0 #00967f, 10px 3px 0 0 #007261;
+  -webkit-box-shadow: 10px 0 0 0 #00967f, 10px 3px 0 0 #007261;
+  right: 0;
+}
+
+.btn.left span.arrow-right {
+  border-left: 10px solid #00967f;
+  box-shadow: -10px 0 0 0 #00967f, -10px 3px 0 0 #007261;
+  -moz-box-shadow: -10px 0 0 0 #00967f, -10px 3px 0 0 #007261;
+  -webkit-box-shadow: -10px 0 0 0 #00967f, -10px 3px 0 0 #007261;
+  left: 0;
+}
+
+.btn.right span.arrow-right {
+  border-left: 10px solid #00cdae;
+  box-shadow: -10px 0 0 0 #00cdae, -10px 3px 0 0 #00ae94;
+  -moz-box-shadow: -10px 0 0 0 #00cdae, -10px 3px 0 0 #00ae94;
+  -webkit-box-shadow: -10px 0 0 0 #00cdae, -10px 3px 0 0 #00ae94;
+  left: 0;
+}
+
+.btn span.slant-left, .btn span.slant-right {
+  border-bottom: 50px solid transparent;
+  border-top: 0 solid transparent;
+  height: 0;
+  position: absolute;
+  transition: all .15s;
+  -moz-transition: all .15s;
+  -o-transition: all .15s;
+  -webkit-transition: all .15s;
+  transition-property: left, right;
+  -moz-transition-property: left, right;
+  -o-transition-property: left, right;
+  -webkit-transition-property: left, right;
+  width: 0;
+}
+
+.btn.left span.slant-right {
+  border-left: 10px solid #00967f;
+  box-shadow: -10px 0 0 0 #00967f, -10px 3px 0 0 #007261;
+  -moz-box-shadow: -10px 0 0 0 #00967f, -10px 3px 0 0 #007261;
+  -webkit-box-shadow: -10px 0 0 0 #00967f, -10px 3px 0 0 #007261;
+  left: 0;
+}
+
+.btn.right span.slant-right {
+  border-left: 10px solid #00cdae;
+  box-shadow: -10px 0 0 0 #00cdae, -10px 3px 0 0 #00ae94;
+  -moz-box-shadow: -10px 0 0 0 #00cdae, -10px 3px 0 0 #00ae94;
+  -webkit-box-shadow: -10px 0 0 0 #00cdae, -10px 3px 0 0 #00ae94;
+  left: 0;
+}
+
+.btn.left span.slant-left {
+  border-right: 10px solid #00cdae;
+  box-shadow: 10px 0 0 0 #00cdae, 10px 3px 0 0 #00ae94;
+  -moz-box-shadow: 10px 0 0 0 #00cdae, 10px 3px 0 0 #00ae94;
+  -webkit-box-shadow: 10px 0 0 0 #00cdae, 10px 3px 0 0 #00ae94;
+  right: 0;
+}
+
+.btn.right span.slant-left {
+  border-right: 10px solid #00967f;
+  box-shadow: 10px 0 0 0 #00967f, 10px 3px 0 0 #007261;
+  -moz-box-shadow: 10px 0 0 0 #00967f, 10px 3px 0 0 #007261;
+  -webkit-box-shadow: 10px 0 0 0 #00967f, 10px 3px 0 0 #007261;
+  right: 0;
+}
+
+.btn:active, .btn.active {
+  height: 51px;
+}
+
+.btn:hover span.arrow-left {
+  right: 10px;
+}
+
+.btn:hover span.arrow-right {
+  left: 10px;
+}
+
+.btn:hover span.slant-left {
+  right: 10px;
+}
+
+.btn:hover span.slant-right {
+  left: 10px;
+}
+
+.btn-small {
+  font-size: 12px;
+  height: 30px;
+  line-height: 10px;
+}
+
+a.btn-small span.btn {
+  height: 30px;
+}
