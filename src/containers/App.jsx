@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react';
 import download from 'downloadjs';
 import MomentJS from 'moment';
 import 'moment/locale/ru';
+import Spinner from './spinner/Spinner'
 
 import Modal from 'react-modal';
 
@@ -45,6 +46,7 @@ class App extends Component {
       finish,
       modalIsOpen: false,
       moment,
+      loading: false
     };
   }
 
@@ -86,17 +88,32 @@ class App extends Component {
     this.setState({ modalIsOpen: isOpening });
   }
 
-  downloadBNKomi = () => { this.download('bnk'); }
+  downloadBNKomi = () => {
+    this.setState(() => ({ loading: true }));
+    this.download('bnk').then(() => {
+      this.setState(() => ({ loading: false}));
+    });
+  }
 
-  downloadBNKomiStat = () => { this.download('bnk', 'stat'); }
+  downloadBNKomiStat = () => {
+    this.setState(() => ({ loading: true }));
+    this.download('bnk', 'stat').then(() => {
+      this.setState(() => ({ loading: false}));
+    });
+  }
 
-  downloadKomiInform = () => { this.download('komiinform'); }
+  downloadKomiInform = () => {
+  this.setState(() => ({ loading: true }));
+    this.download('komiinform').then(() => {
+      this.setState(() => ({ loading: false}));
+    });
+  }
 
   download = (site, path = 'comments') => {
     const { start: { iso: start }, finish: { iso: finish } } = this.state;
     const url = `api/${site}/${path}${objectToParams({ start, finish })}`;
 
-    request(url)
+    return request(url)
       .then((response) => {
         const contentDisposition = response.headers.get('Content-Disposition');
         const filename = contentDisposition.match(/filename="(.+)"/)[1];
@@ -152,6 +169,7 @@ class App extends Component {
             title="Статистика БНК"
             type="slant-left"
           />
+          {/*{ this.state.loading && <img src="spinner/spinner.gif" /> }*/}
         </div>
         <Modal
           ariaHideApp={false}
@@ -166,6 +184,7 @@ class App extends Component {
             onSave={onSave}
           />
         </Modal>
+        {this.state.loading && <Spinner />}
       </Fragment>
     );
   }
