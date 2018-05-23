@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react';
 import download from 'downloadjs';
 import MomentJS from 'moment';
 import 'moment/locale/ru';
-import Spinner from './spinner/Spinner'
 
 import Modal from 'react-modal';
 
@@ -11,6 +10,7 @@ import { objectToParams, request } from '../utils';
 
 import Button from '../components/Button';
 import InputMoment from '../components/InputMoment';
+import Spinner from '../components/Spinner';
 
 import BNKomiIcon from './icons/bnkomi.png';
 import KomiInformIcon from './icons/komiinform.png';
@@ -46,7 +46,7 @@ class App extends Component {
       finish,
       modalIsOpen: false,
       moment,
-      loading: false
+      loading: false,
     };
   }
 
@@ -89,29 +89,22 @@ class App extends Component {
   }
 
   downloadBNKomi = () => {
-    this.setState(() => ({ loading: true }));
-    this.download('bnk').then(() => {
-      this.setState(() => ({ loading: false}));
-    });
+    this.download('bnk');
   }
 
   downloadBNKomiStat = () => {
-    this.setState(() => ({ loading: true }));
-    this.download('bnk', 'stat').then(() => {
-      this.setState(() => ({ loading: false}));
-    });
+    this.download('bnk', 'stat');
   }
 
   downloadKomiInform = () => {
-  this.setState(() => ({ loading: true }));
-    this.download('komiinform').then(() => {
-      this.setState(() => ({ loading: false}));
-    });
+    this.download('komiinform');
   }
 
   download = (site, path = 'comments') => {
     const { start: { iso: start }, finish: { iso: finish } } = this.state;
     const url = `api/${site}/${path}${objectToParams({ start, finish })}`;
+
+    this.setState({ loading: true });
 
     return request(url)
       .then((response) => {
@@ -121,12 +114,15 @@ class App extends Component {
         response.blob()
           .then((file) => {
             download(file, filename, file.type);
+            this.setState({ loading: false });
           });
       });
   }
 
   render() {
-    const { finish, modalIsOpen, moment, onSave, start } = this.state;
+    const { finish, loading, modalIsOpen, moment, onSave, start } = this.state;
+
+    if (loading) return <Spinner />;
 
     return (
       <Fragment>
@@ -169,7 +165,6 @@ class App extends Component {
             title="Статистика БНК"
             type="slant-left"
           />
-          {/*{ this.state.loading && <img src="spinner/spinner.gif" /> }*/}
         </div>
         <Modal
           ariaHideApp={false}
@@ -184,7 +179,6 @@ class App extends Component {
             onSave={onSave}
           />
         </Modal>
-        {this.state.loading && <Spinner />}
       </Fragment>
     );
   }
