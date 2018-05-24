@@ -2,20 +2,18 @@ FROM node:9.11.1-alpine as front
 
 WORKDIR /home/node
 
-ENV APP_HOME /usr/src/app
-
 COPY package.json .
 COPY package-lock.json .
 COPY webpack.config.js .
 
 RUN npm install --no-optional
 
-RUN mkdir public && mkdir etc
+RUN mkdir public && mkdir src
 
-COPY ./src ./src
+COPY ./src/ ./src
 COPY ./public/ ./public
 
-RUN npm run build  && rm -rf node_modules .npm
+RUN npm run build
 
 FROM ruby:2.4-alpine3.7
 
@@ -40,6 +38,8 @@ RUN curl --fail -L -o /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init
 
 ENV APP_HOME /usr/src/app
 
+RUN mkdir -p $APP_HOME/public
+
 WORKDIR $APP_HOME
 
 COPY Gemfile $APP_HOME
@@ -48,7 +48,9 @@ COPY Gemfile.lock $APP_HOME
 RUN bundle config build.nokogiri --use-system-libraries && \
   bundle install --jobs=4 --without development test
 
-COPY . $APP_HOME
+COPY --from=front /home/node/public ./public
+
+COPY . ./
 
 EXPOSE 8109
 
