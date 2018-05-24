@@ -105,7 +105,7 @@ module WebScraping
         end
         sheet.change_row_height(0, 55)
         1.upto(row) do |i|
-          sheet.change_row_height(i, 20)
+          sheet.change_row_height(i, 25)
         end
       end
 

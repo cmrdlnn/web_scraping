@@ -102,7 +102,7 @@ module WebScraping
           sheet.change_column_width(i, width)
         end
         0.upto(row) do |i|
-          sheet.change_row_height(i, 20)
+          sheet.change_row_height(i, 25)
         end
       end
 

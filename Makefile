@@ -18,6 +18,3 @@ doc:
 doc_stats:
 	bundle exec yard stats --list-undoc
 
-run-build:
-  docker-compose up --build -d
-
