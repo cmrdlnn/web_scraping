@@ -1,33 +1,45 @@
-FROM ubuntu:16.04
+FROM node:9.11.1-alpine as front
+
+WORKDIR /home/node
 
 ENV APP_HOME /usr/src/app
 
-ENV BUILD_PACKAGES \
-  git\
-  mc\
-  im\
-  wget\
-  ruby2.4-dev\
-  g++\
-  unrar\
-  zlib1g-dev
+COPY package.json .
+COPY package-lock.json .
+COPY webpack.config.js .
 
-ENV RUBY_VERSION 2.4
+RUN npm install --no-optional
 
-ENV BUNDLER_VERSION 1.16.2
+RUN mkdir public && mkdir etc
 
-RUN apt-get update \
-    && apt-get install -y software-properties-common \
-    && apt-add-repository ppa:brightbox/ruby-ng \
-    && apt-get update \
-    && apt-get install -y $BUILD_PACKAGES
+COPY ./src ./src
+COPY ./public/ ./public
 
-RUN apt-get install -y ruby$RUBY_VERSION \
-    && echo "gem: --no-ri --no-rdoc" >> /etc/gemrc \
-    && gem install bundler -v $BUNDLER_VERSION \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN npm run build  && rm -rf node_modules .npm
 
-RUN mkdir $APP_HOME
+FROM ruby:2.4-alpine3.7
+
+RUN apk update && \
+    apk upgrade && \
+    apk add \
+        mc\
+        git \
+        g++ \
+        make \
+        unrar\
+        libxml2-dev \
+        libxslt-dev \
+        libffi-dev \
+  curl \
+  bash
+
+RUN rm -f /var/cache/apk/*
+
+RUN curl --fail -L -o /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 && \
+    chmod +x /usr/local/bin/dumb-init
+
+ENV APP_HOME /usr/src/app
+
 WORKDIR $APP_HOME
 
 COPY Gemfile $APP_HOME
@@ -38,7 +50,7 @@ RUN bundle config build.nokogiri --use-system-libraries && \
 
 COPY . $APP_HOME
 
-EXPOSE 8109S
+EXPOSE 8109
 
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 CMD ["bundle", "exec", "foreman", "start"]
