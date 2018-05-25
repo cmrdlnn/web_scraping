@@ -68,7 +68,7 @@ module WebScraping
             memo + 1
           end
           separating_line(line)
-          row + line
+          row = line + 1
         end
       end
 
