@@ -6,7 +6,7 @@ const path = require('path');
 const devServerOptions = process.argv.find(arg => arg.includes('webpack-dev-server'))
   ? {
     devServer: { headers: { 'Access-Control-Allow-Origin': '*' } },
-    output: { publicPath: '/' },
+    output: { publicPath: 'http://0.0.0.0:8080/' },
   }
   : {};
 
@@ -31,7 +31,10 @@ module.exports = merge({
       },
     ],
   },
-  output: { path: path.join(__dirname, 'public') },
+  output: {
+    path: path.join(__dirname, 'public'),
+    publicPath: '/',
+  },
   plugins: [
     new HtmlWebpackPlugin({
       alwaysWriteToDisk: true,
