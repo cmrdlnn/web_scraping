@@ -5,6 +5,7 @@ html, body {
 }
 
 body {
+  background-image: url('../images/background.png');
   background-attachment: fixed;
   background-color: #ddd;
   background-size: cover;

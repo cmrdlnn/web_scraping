@@ -40,9 +40,9 @@ module WebScraping
               href = item.css('.title').at_css('a')['href']
               link = base_url + href
               comments_count = item
-                              .css('.utils')
-                              .css('.comments')
-                              .text.strip.to_i
+                               .css('.utils')
+                               .css('.comments')
+                               .text.strip.to_i
               if comments_count.zero?
                 comments = []
               else
