@@ -4,42 +4,54 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 class Button extends Component {
-  icon = (isLeft) => {
-    const { icon, assign } = this.props;
+  logicalEquality = (A, B) => (!A || B) && (A || !B)
+
+  icon = (assignIsLeft, viewIsLeft) => {
+    const { assign, icon } = this.props;
 
     return (
       <span className={classNames(assign, 'icon', 'icon-cloud-download')}>
-        { isLeft && this.iconContainer() }
         <img src={icon} alt="" />
+        { this.logicalEquality(assignIsLeft, viewIsLeft) && this.iconContainer() }
       </span>
     );
   }
 
-  title = (isLeft) => {
+  title = (assignIsLeft, viewIsLeft) => {
     const { title } = this.props;
 
     return (
-      <span className={classNames(isLeft ? 'right' : 'left', 'title')}>
-        { !isLeft && this.iconContainer() }
+      <span className={classNames(assignIsLeft ? 'right' : 'left', 'title')}>
+        { !this.logicalEquality(assignIsLeft, viewIsLeft) && this.iconContainer() }
         { title }
       </span>
     );
   }
 
   iconContainer = () => {
-    const { type } = this.props;
-    return type && <span className={type} />;
+    const { view } = this.props;
+
+    return view && <span className={view} />;
   }
 
   render() {
-    const { onClick, assign } = this.props;
-    const isLeft = assign === 'left';
-    const orderedContent = isLeft
-      ? [this.icon(isLeft), this.title(isLeft)]
-      : [this.title(), this.icon()];
+    const { assign, icon, onClick, title, view, ...other } = this.props;
+
+    const assignIsLeft = assign === 'left';
+    const viewIsLeft = /.+-left$/.test(view);
+
+    const iconPart = this.icon(assignIsLeft, viewIsLeft);
+    const titlePart = this.title(assignIsLeft, viewIsLeft);
+
+    const orderedContent = assignIsLeft ? [iconPart, titlePart] : [titlePart, iconPart];
 
     return (
-      <button className={classNames(assign, 'btn')} onClick={onClick}>
+      <button
+        className={classNames(assign, 'btn')}
+        onClick={onClick}
+        type="button"
+        {...other}
+      >
         { orderedContent }
       </button>
     );
@@ -49,7 +61,7 @@ class Button extends Component {
 Button.defaultProps = {
   assign: 'left',
   icon: null,
-  type: null,
+  view: null,
 };
 
 Button.propTypes = {
@@ -57,7 +69,7 @@ Button.propTypes = {
   icon: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  type: PropTypes.oneOf([
+  view: PropTypes.oneOf([
     'arrow-left',
     'arrow-right',
     'slant-left',
