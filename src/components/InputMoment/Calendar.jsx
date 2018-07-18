@@ -14,7 +14,11 @@ const Day = ({ i, w, d, className, ...props }) => {
     'current-day': !prevMonth && !nextMonth && i === d,
   });
 
-  return <td className={cls} {...props}>{i}</td>;
+  return (
+    <td className={cls} {...props}>
+      {i}
+    </td>
+  );
 };
 
 Day.defaultProps = {
@@ -30,16 +34,17 @@ Day.propTypes = {
 
 class Calendar extends Component {
   selectDate = (i, w) => {
+    const { moment, onChange } = this.props;
     const prevMonth = w === 0 && i > 7;
     const nextMonth = w >= 4 && i <= 14;
-    const m = this.props.moment;
+    const m = moment;
 
     if (prevMonth) m.subtract(1, 'month');
     if (nextMonth) m.add(1, 'month');
 
     m.date(i);
 
-    this.props.onChange(m);
+    onChange(m);
   };
 
   prevMonth = () => {
@@ -56,7 +61,7 @@ class Calendar extends Component {
   };
 
   render() {
-    const { moment, nextMonthIcon, prevMonthIcon, weeks } = this.props;
+    const { className, moment, nextMonthIcon, prevMonthIcon, weeks } = this.props;
     const d = moment.date();
     const calendar = [];
     const startDay = moment.clone().startOf('month').startOf('week');
@@ -70,12 +75,14 @@ class Calendar extends Component {
     }
 
     return (
-      <div className={classNames('m-calendar', this.props.className)}>
+      <div className={classNames('m-calendar', className)}>
         <div className="toolbar">
           <button type="button" className="prev-month" onClick={this.prevMonth}>
             <img src={prevMonthIcon} alt="🡐" />
           </button>
-          <span className="current-date">{moment.format('MMMM YYYY')}</span>
+          <span className="current-date">
+            { moment.format('MMMM YYYY') }
+          </span>
           <button type="button" className="next-month" onClick={this.nextMonth}>
             <img src={nextMonthIcon} alt="🡒" />
           </button>
@@ -84,7 +91,13 @@ class Calendar extends Component {
         <table>
           <thead>
             <tr>
-              { weeks.map((w, i) => <td key={i}>{w}</td>) }
+              {
+                weeks.map((w, i) => (
+                  <td key={w}>
+                    { w }
+                  </td>
+                ))
+              }
             </tr>
           </thead>
 

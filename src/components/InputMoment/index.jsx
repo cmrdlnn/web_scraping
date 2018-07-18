@@ -24,8 +24,11 @@ class InputMoment extends Component {
   };
 
   handleSave = (e) => {
+    const { onSave } = this.props;
+
     e.preventDefault();
-    if (this.props.onSave) this.props.onSave();
+
+    if (onSave) onSave();
   };
 
   render() {
@@ -44,7 +47,9 @@ class InputMoment extends Component {
 
     return (
       <div className={cls} {...props}>
-        <div className="im-header">{ moment.format('ll') }</div>
+        <div className="im-header">
+          { moment.format('ll') }
+        </div>
         { /*
         <div className="options">
           <button
@@ -84,14 +89,16 @@ class InputMoment extends Component {
         </div>
 
         {
-          onSave &&
-          <button
-            type="button"
-            className="im-btn btn-save ion-checkmark"
-            onClick={this.handleSave}
-          >
-            { saveTitle }
-          </button>
+          onSave
+          && (
+            <button
+              type="button"
+              className="im-btn btn-save ion-checkmark"
+              onClick={this.handleSave}
+            >
+              { saveTitle }
+            </button>
+          )
         }
       </div>
     );

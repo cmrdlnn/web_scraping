@@ -35,13 +35,21 @@ class Time extends Component {
     return (
       <div className={classNames('m-time', className)}>
         <div className="showtime">
-          <span className="time">{moment.format('HH')}</span>
-          <span className="separater">:</span>
-          <span className="time">{moment.format('mm')}</span>
+          <span className="time">
+            { moment.format('HH') }
+          </span>
+          <span className="separater">
+            :
+          </span>
+          <span className="time">
+            { moment.format('mm') }
+          </span>
         </div>
 
         <div className="sliders">
-          <div className="time-text">{hoursTitle}</div>
+          <div className="time-text">
+            { hoursTitle }
+          </div>
           <InputSlider
             className="u-slider-time"
             xmin={0}
@@ -50,7 +58,9 @@ class Time extends Component {
             x={moment.hour()}
             onChange={this.changeHours}
           />
-          <div className="time-text">{minutesTitle}</div>
+          <div className="time-text">
+            { minutesTitle }
+          </div>
           <InputSlider
             className="u-slider-time"
             xmin={0}

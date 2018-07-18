@@ -130,13 +130,17 @@ class App extends Component {
           <button
             className="btn"
             onClick={this.startChanging}
+            type="button"
           >
             Изменить начальную дату
           </button>
-          { start.readable } - { finish.readable }
+          { start.readable }
+          {' - '}
+          { finish.readable }
           <button
             className="btn"
             onClick={this.finishChanging}
+            type="button"
           >
             Изменить конечную дату
           </button>
@@ -147,14 +151,14 @@ class App extends Component {
             icon={BNKomiIcon}
             onClick={this.downloadBNKomi}
             title="Комментарии БНК"
-            type="slant-left"
+            view="slant-left"
           />
           <Button
             assign="right"
             icon={KomiInformIcon}
             onClick={this.downloadKomiInform}
             title="Комментарии Комиинформ"
-            type="slant-left"
+            view="slant-left"
           />
         </div>
         <div className="line">
@@ -163,12 +167,12 @@ class App extends Component {
             icon={BNKomiIcon}
             onClick={this.downloadBNKomiStat}
             title="Статистика БНК"
-            type="slant-left"
+            view="slant-right"
           />
         </div>
         <Modal
           ariaHideApp={false}
-          contentLabel="Example Modal"
+          contentLabel="InputMoment"
           isOpen={modalIsOpen}
           onRequestClose={this.close}
           style={modalStyles}
