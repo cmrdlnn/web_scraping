@@ -62,16 +62,26 @@ class App extends Component {
   }
 
   handleSave = (intervalPart) => {
-    /*
     const { finish, moment, start } = this.state;
+    const currentDate = MomentJS().toObject();
 
-    if (intervalPart === 'start' && moment.isAfter(finish.iso)) {
-
-    } else if (intervalPart === 'finish' && moment.isBefore(start.iso)) {
-
+    if (moment.isAfter(currentDate)) {
+      moment.set(currentDate);
     }
-    */
-    this.setState({ [intervalPart]: this.interval() }, this.close);
+
+    const newIntervelPart = this.interval();
+    let newState;
+
+    if (
+      (intervalPart === 'start' && moment.isAfter(finish.iso))
+      || (intervalPart === 'finish' && moment.isBefore(start.iso))
+    ) {
+      newState = { finish: newIntervelPart, start: newIntervelPart };
+    } else {
+      newState = { [intervalPart]: newIntervelPart };
+    }
+
+    this.setState(newState, this.close);
   }
 
   startChanging = () => { this.open('start'); }
