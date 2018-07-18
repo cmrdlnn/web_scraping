@@ -18,7 +18,10 @@ module WebScraping
   #  @params [Hash]
   #   параметры для парсинга
   def self.bnk_scraping_comments(params)
-    Bnk::ScrapingComments.new(params).scraping
+    thread = Thread.new do
+      Bnk::ScrapingComments.new(params).scraping
+    end
+    thread.value
   end
 
   # Парсит статистику просмотров и вовлеченность на ресурсе `bnlkomi.ru`
@@ -26,7 +29,10 @@ module WebScraping
   #  @params [Hash]
   #   параметры для парсинга
   def self.bnk_scraping_stat(params)
-    Bnk::ScrapingStat.new(params).scraping
+    thread = Thread.new do
+      Bnk::ScrapingStat.new(params).scraping
+    end
+    thread.value
   end
 
   # Парсит комментарии к статьям на ресурсе `komiinform.ru`
@@ -34,6 +40,9 @@ module WebScraping
   #  @params [Hash]
   #   параметры для парсинга
   def self.komiinform_scraping_comments(params)
-    Komiinform::ScrapingComments.new(params).scraping
+    thread = Thread.new do
+      Komiinform::ScrapingComments.new(params).scraping
+    end
+    thread.value
   end
 end

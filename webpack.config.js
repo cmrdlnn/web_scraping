@@ -31,7 +31,10 @@ module.exports = merge({
       },
     ],
   },
-  output: { path: path.join(__dirname, 'public') },
+  output: {
+    path: path.join(__dirname, 'public'),
+    publicPath: '/',
+  },
   plugins: [
     new HtmlWebpackPlugin({
       alwaysWriteToDisk: true,

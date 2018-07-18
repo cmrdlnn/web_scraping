@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
 
-import range from 'lodash/range';
-import chunk from 'lodash/chunk';
-
 import './less/calendar.less';
 
 const Day = ({ i, w, d, className, ...props }) => {
@@ -61,14 +58,16 @@ class Calendar extends Component {
   render() {
     const { moment, nextMonthIcon, prevMonthIcon, weeks } = this.props;
     const d = moment.date();
-    const d1 = moment.clone().subtract(1, 'month').endOf('month').date();
-    const d2 = moment.clone().date(1).day();
-    const d3 = moment.clone().endOf('month').date();
-    const days = [].concat(
-      range((d1 - d2) + 1, d1 + 1),
-      range(1, d3 + 1),
-      range(1, ((42 - d3) - d2) + 1),
-    );
+    const calendar = [];
+    const startDay = moment.clone().startOf('month').startOf('week');
+    const endDay = moment.clone().endOf('month').endOf('week');
+    const date = startDay.clone().subtract(1, 'day');
+
+    while (date.isBefore(endDay, 'day')) {
+      calendar.push(
+        Array(7).fill(0).map(() => date.add(1, 'day').clone().date()),
+      );
+    }
 
     return (
       <div className={classNames('m-calendar', this.props.className)}>
@@ -85,13 +84,13 @@ class Calendar extends Component {
         <table>
           <thead>
             <tr>
-              {weeks.map((w, i) => <td key={i}>{w}</td>)}
+              { weeks.map((w, i) => <td key={i}>{w}</td>) }
             </tr>
           </thead>
 
           <tbody>
             {
-              chunk(days, 7).map((row, w) => (
+              calendar.map((row, w) => (
                 <tr key={w}>
                   {
                     row.map(i => (

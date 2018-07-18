@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-source 'http://repo.it2.vm/repository/gem-group'
+source 'https://rubygems.org'
 
 gem 'activesupport'
 gem 'dotenv'

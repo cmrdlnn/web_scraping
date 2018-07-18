@@ -33,11 +33,11 @@ module WebScraping
             url = base_url + '/curdate/' + date
             html = open(url)
             doc = Nokogiri::HTML(html)
-            list = doc.at_css("[class=' b-news']").css('.smallHeader2')
+            list = doc.at_css("[class=' b-news']").css('.rubricContent')
             list.each do |item|
               date = date.gsub('-', '.')
-              title = item.children.text.strip
-              href = item['href']
+              title = item.at_css('.smallHeader2').children.text.strip.gsub('"', '')
+              href = item.at_css('.smallHeader2')['href']
               link = base_url + href
               comments = scraping_comments(href)
               memo << [date, title, comments, link]

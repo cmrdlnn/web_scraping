@@ -17,3 +17,4 @@ doc:
 .PHONY: doc_stats
 doc_stats:
 	bundle exec yard stats --list-undoc
+

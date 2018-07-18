@@ -39,7 +39,15 @@ module WebScraping
               title = item.css('.title').text.strip
               href = item.css('.title').at_css('a')['href']
               link = base_url + href
-              comments = scraping_comments(href)
+              comments_count = item
+                               .css('.utils')
+                               .css('.comments')
+                               .text.strip.to_i
+              if comments_count.zero?
+                comments = []
+              else
+                comments = scraping_comments(href)
+              end
               memo << [date, title, comments, link]
             end
           end
