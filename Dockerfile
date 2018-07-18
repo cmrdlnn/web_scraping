@@ -6,7 +6,7 @@ COPY package.json .
 COPY package-lock.json .
 COPY webpack.config.js .
 
-RUN npm install --no-optional
+RUN npm install --no-optional --production
 
 RUN mkdir public && mkdir src
 
